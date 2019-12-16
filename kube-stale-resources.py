@@ -4,33 +4,34 @@ import argparse
 import re
 import sys
 
+from typing import (List, Tuple, IO)
+
 import requests
 import yaml
 
-from typing import (List, Any, Dict, Tuple, IO)
 K8sResourceIdentifier = Tuple[str, str, str, str]
 
 HEADERS = {"Content-Type": "application/json"}
 
 BLACKLIST_REGEXS = [
-  # Kubernetes inherent blacklist (should apply to every k8s cluster out there)
-  r'^.*:apps/v1:ControllerRevision:.*$',
-  r'^.*:apps/v1:ReplicaSet:.*$',
-  r'^.*:batch/v1:Job:.*-\d{10,}$',  # jobs created by cron jobs with unix timestamp suffix
-  r'^.*:metrics.k8s.io/v1beta1:PodMetrics:.*$',
-  r'^.*:v1:Endpoints:.*$',
-  r'^.*:v1:Event:.*$',
-  r'^.*:v1:Pod:.*$',
-  r'^.*:v1:Secret:.*-token-\S{5}$',  # secrets with token for service accounts
-  r'^.*:v1:ServiceAccount:default$',
-  r'^default:v1:Service:kubernetes$',
-  r'^kube-node-lease:.*$',
-  r'^kube-public:.*$',
-  r'^kube-system:.*$',
+    # Kubernetes inherent blacklist (should apply to every k8s cluster out there)
+    r'^.*:apps/v1:ControllerRevision:.*$',
+    r'^.*:apps/v1:ReplicaSet:.*$',
+    r'^.*:batch/v1:Job:.*-\d{10,}$',  # jobs created by cron jobs with unix timestamp suffix
+    r'^.*:metrics.k8s.io/v1beta1:PodMetrics:.*$',
+    r'^.*:v1:Endpoints:.*$',
+    r'^.*:v1:Event:.*$',
+    r'^.*:v1:Pod:.*$',
+    r'^.*:v1:Secret:.*-token-\S{5}$',  # secrets with token for service accounts
+    r'^.*:v1:ServiceAccount:default$',
+    r'^default:v1:Service:kubernetes$',
+    r'^kube-node-lease:.*$',
+    r'^kube-public:.*$',
+    r'^kube-system:.*$',
 
-  # GKE specific parts (should apply to every GKE-managed k8s cluster)
-  # '^.*:v1:ResourceQuota:gke-resource-quotas$',
-  # '^default:v1:LimitRange:limits$,
+    # GKE specific parts (should apply to every GKE-managed k8s cluster)
+    # '^.*:v1:ResourceQuota:gke-resource-quotas$',
+    # '^default:v1:LimitRange:limits$,
 ]
 
 
@@ -51,7 +52,7 @@ def get_live_namespaced_resources(url: str) -> List[K8sResourceIdentifier]:
                                  headers=HEADERS).json()['items']
             for item in items:
                 result.append(
-                  (item['metadata']['namespace'], apiVersion, apiResource['kind'], item['metadata']['name']))
+                    (item['metadata']['namespace'], apiVersion, apiResource['kind'], item['metadata']['name']))
 
     # named API groups
     apiGroups = requests.get(url + '/apis', headers=HEADERS).json()['groups']
@@ -89,7 +90,7 @@ def get_target_namespaced_resources(stream: IO) -> List[K8sResourceIdentifier]:
             continue
 
         result.append(
-          (document['metadata']['namespace'], document['apiVersion'], document['kind'], document['metadata']['name']))
+            (document['metadata']['namespace'], document['apiVersion'], document['kind'], document['metadata']['name']))
 
     return result
 
@@ -98,7 +99,7 @@ def get_compact_resource_identifiers(tuples: List[K8sResourceIdentifier]) -> Lis
     return [namespace + ':' + apiVersion + ':' + kind + ':' + name for namespace, apiVersion, kind, name in tuples]
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description='Utility to detect k8s configuration drift.')
 
     parser.add_argument('-f',
@@ -121,7 +122,7 @@ if __name__ == "__main__":
     if args.blacklist_file:
         print(f'Reading blacklist file {args.blacklist_file}...')
         with open(args.blacklist_file, 'r') as f:
-            blacklist_regexs += filter(lambda x: not re.match(r'^\s*$', x), f.read().split('\n'))
+            blacklist_regexs += list(filter(lambda x: not re.match(r'^\s*$', x), f.read().split('\n')))
 
     print('Retrieving target state...')
     if args.target_manifests_file == '-':
@@ -154,3 +155,7 @@ if __name__ == "__main__":
             counter += 1
             print('  ' + x)
     print("..", counter, "entries")
+
+
+if __name__ == "__main__":
+    main()
