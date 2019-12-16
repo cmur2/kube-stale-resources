@@ -1,5 +1,7 @@
 # kube-stale-resources
 
+![Build Status](https://github.com/cmur2/kube-stale-resources/workflows/ci/badge.svg?branch=add-ci)
+
 This is a utility to detect stale resources in [Kubernetes](https://kubernetes.io/) clusters between resources from YAML manifests supplied via local file or stdin (target state) and a Kubernetes cluster (live state).
 All resources that exist in the live state but not in the target state are considered *stale* as they deviate from the intended state of the Kubernetes cluster (closed world assumption). It is intended as a complement to [kubectl diff](https://kubernetes.io/blog/2019/01/14/apiserver-dry-run-and-kubectl-diff/).
 
