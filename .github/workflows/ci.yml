@@ -25,4 +25,5 @@ jobs:
         pipenv run yapf -q *.py
     - name: Linting
       run: |
+        pipenv run mypy *.py
         pipenv run pylint *.py

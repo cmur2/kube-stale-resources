@@ -4,7 +4,7 @@ import argparse
 import re
 import sys
 
-from typing import (List, Tuple, IO)
+from typing import (IO, List, Tuple)
 
 import requests
 import yaml
@@ -36,6 +36,10 @@ BLACKLIST_REGEXS = [
 
 
 def get_live_namespaced_resources(url: str) -> List[K8sResourceIdentifier]:
+    """
+    Returns list of Kubernetes resource identifiers of namespaced resources out of the live cluster reachable at url.
+    """
+
     result = []
 
     # merges https://kubernetes.io/docs/reference/using-api/#api-groups
@@ -80,6 +84,9 @@ def get_live_namespaced_resources(url: str) -> List[K8sResourceIdentifier]:
 
 
 def get_target_namespaced_resources(stream: IO) -> List[K8sResourceIdentifier]:
+    """
+    Returns list of Kubernetes resource identifiers of namespaced resources out of the target stream.
+    """
     result = []
 
     target_documents = list(yaml.load_all(stream, Loader=yaml.SafeLoader))
@@ -96,6 +103,9 @@ def get_target_namespaced_resources(stream: IO) -> List[K8sResourceIdentifier]:
 
 
 def get_compact_resource_identifiers(tuples: List[K8sResourceIdentifier]) -> List[str]:
+    """
+    Returns a compact, sortable string for a Kubernetes resource identifier.
+    """
     return [namespace + ':' + apiVersion + ':' + kind + ':' + name for namespace, apiVersion, kind, name in tuples]
 
 
@@ -116,7 +126,7 @@ def main():
 
     args = parser.parse_args()
 
-    blacklist_regexs = []
+    blacklist_regexs: List[str] = []
     blacklist_regexs += BLACKLIST_REGEXS
 
     if args.blacklist_file:
