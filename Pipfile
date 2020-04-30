@@ -9,7 +9,7 @@ pyyaml = '*'
 requests = '*'
 
 [dev-packages]
-rope = '*'
-pylint = '*'
-yapf = '*'
-mypy = '*'
+rope = '==0.16.0'
+pylint = '==2.4.4'
+yapf = '==0.29.0'
+mypy = '== 0.770'
