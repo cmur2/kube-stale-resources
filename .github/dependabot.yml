@@ -11,6 +11,8 @@ updates:
   pull-request-branch-name:
     separator: "-"
   open-pull-requests-limit: 99
+  commit-message:
+    prefix: "module:"
   allow:
   - dependency-type: direct
   - dependency-type: indirect
