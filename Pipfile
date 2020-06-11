@@ -10,6 +10,6 @@ requests = '*'
 
 [dev-packages]
 rope = '==0.17.0'
-pylint = '==2.5.2'
+pylint = '==2.5.3'
 yapf = '==0.30.0'
 mypy = '== 0.780'
