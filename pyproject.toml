@@ -1,0 +1,22 @@
+[build-system]
+requires = ["poetry>=1.0"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name = "kube-stale-resources"
+version = "1.0.0"
+description = "Utility augmenting 'kubectl diff' to detect stale resources in Kubernetes clusters between local YAML manifests (target state) and the cluster (live state)."
+authors = ["Christian Nicolai"]
+license = "Apache-2.0"
+homepage = "https://dev.mycrobase.de/gitea/cn/kube-stale-resources"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pyyaml = "5.3.1"
+requests = "2.24.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "0.782"
+pylint = "2.5.3"
+rope = "0.17.0"
+yapf = "0.30.0"
