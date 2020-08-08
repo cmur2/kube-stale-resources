@@ -16,14 +16,8 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pipenv
-        pipenv install --dev --deploy
-    - name: Formatting
-      run: |
-        # check that the source files are formatted correctly
-        pipenv run yapf -q *.py
+        pip install poetry
+        poetry install
     - name: Linting
       run: |
-        pipenv run mypy *.py
-        pipenv run pylint *.py
+        make lint
