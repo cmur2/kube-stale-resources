@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python 3.8
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: 3.8
     - name: Install dependencies
@@ -21,3 +21,35 @@ jobs:
     - name: Linting
       run: |
         make lint
+
+  e2e-with-kind:
+    name: e2e with kind
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        k8s-version:
+        - v1.16.9
+        - v1.18.8
+    env:
+      kind-version: v0.8.1
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry install
+    - name: Set up kind with K8s version ${{ matrix.k8s-version }}
+      uses: engineerd/setup-kind@v0.4.0
+      with:
+        image: kindest/node:${{ matrix.k8s-version }}
+        version: ${{ env.kind-version }}
+    - name: E2E test
+      run: |
+        kubectl cluster-info
+        kubectl proxy &
+        make e2e-with-kind
