@@ -20,6 +20,7 @@ BLACKLIST_REGEXS = [
     r'^.*:batch/v1:Job:.*-\d{10,}$',  # jobs created by cron jobs with unix timestamp suffix
     r'^.*:metrics.k8s.io/v1beta1:PodMetrics:.*$',
     r'^.*:v1:Endpoints:.*$',
+    r'^.*:.*:EndpointSlice:.*$',
     r'^.*:v1:Event:.*$',
     r'^.*:v1:Pod:.*$',
     r'^.*:v1:Secret:.*-token-\S{5}$',  # secrets with token for service accounts
@@ -165,6 +166,8 @@ def main():
             counter += 1
             print('  ' + x)
     print("..", counter, "entries")
+
+    sys.exit(len(list(slive - starget)))
 
 
 if __name__ == "__main__":
