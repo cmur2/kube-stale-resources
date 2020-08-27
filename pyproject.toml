@@ -17,6 +17,6 @@ requests = "~2.24"
 
 [tool.poetry.dev-dependencies]
 mypy = "0.782"
-pylint = "~2.5"
+pylint = "~2.6"
 rope = "~0.17"
 yapf = "~0.30"
