@@ -18,6 +18,7 @@ BLACKLIST_REGEXS = [
     r'^.*:apps/v1:ControllerRevision:.*$',
     r'^.*:apps/v1:ReplicaSet:.*$',
     r'^.*:batch/v1:Job:.*-\d{10,}$',  # jobs created by cron jobs with unix timestamp suffix
+    r'^.*:events.k8s.io/v1:Event:.*$',
     r'^.*:metrics.k8s.io/v1beta1:PodMetrics:.*$',
     r'^.*:v1:Endpoints:.*$',
     r'^.*:.*:EndpointSlice:.*$',
