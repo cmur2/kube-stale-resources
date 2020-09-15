@@ -31,9 +31,9 @@ jobs:
         k8s-version:
         - v1.16.9
         - v1.18.8
-        - v1.19.0
+        - v1.19.1
     env:
-      kind-version: v0.8.1
+      kind-version: v0.9.0
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
