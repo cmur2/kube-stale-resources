@@ -48,7 +48,7 @@ jobs:
         pip install poetry
         poetry install
     - name: Set up kind with K8s version ${{ matrix.k8s-version }}
-      uses: engineerd/setup-kind@v0.4.0
+      uses: engineerd/setup-kind@v0.5.0
       with:
         image: kindest/node:${{ matrix.k8s-version }}
         version: ${{ env.kind-version }}
@@ -56,6 +56,7 @@ jobs:
       run: |
         kubectl cluster-info
         kubectl proxy &
+        sleep 1
         make e2e-with-kind
 
   codeql:
