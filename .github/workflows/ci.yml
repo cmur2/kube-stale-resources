@@ -32,11 +32,11 @@ jobs:
     strategy:
       matrix:
         k8s-version:
-        - v1.16.9
-        - v1.18.8
-        - v1.19.1
+        - v1.16.15
+        - v1.18.15
+        - v1.19.7
     env:
-      kind-version: v0.9.0
+      kind-version: v0.10.0
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
