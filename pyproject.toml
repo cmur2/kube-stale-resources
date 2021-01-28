@@ -16,7 +16,7 @@ pyyaml = "5.4.1"
 requests = "~2.25"
 
 [tool.poetry.dev-dependencies]
-mypy = "0.790"
+mypy = "0.800"
 pylint = "~2.6"
 rope = "~0.18"
 yapf = "~0.30"
