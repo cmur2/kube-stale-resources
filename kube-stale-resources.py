@@ -20,6 +20,9 @@ BLACKLIST_REGEXS = [
     r'^.*:batch/v1:Job:.*-\d{10,}$',  # jobs created by cron jobs with unix timestamp suffix
     r'^.*:events.k8s.io/v1:Event:.*$',
     r'^.*:metrics.k8s.io/v1beta1:PodMetrics:.*$',
+    # CM with CA bundle to verify kube-apiserver connections,
+    # see https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#introducing-rootcaconfigmap
+    r'^.*:v1:ConfigMap:kube-root-ca.crt$',
     r'^.*:v1:Endpoints:.*$',
     r'^.*:.*:EndpointSlice:.*$',
     r'^.*:v1:Event:.*$',
