@@ -136,14 +136,14 @@ def main():
 
     if args.blacklist_file:
         print(f'Reading blacklist file {args.blacklist_file}...')
-        with open(args.blacklist_file, 'r') as f:
+        with open(args.blacklist_file, 'r', encoding='utf-8') as f:
             blacklist_regexs += list(filter(lambda x: not re.match(r'^\s*$', x), f.read().split('\n')))
 
     print('Retrieving target state...')
     if args.target_manifests_file == '-':
         target_tuples = get_target_namespaced_resources(sys.stdin)
     else:
-        with open(args.target_manifests_file, 'r') as f:
+        with open(args.target_manifests_file, 'r', encoding='utf-8') as f:
             target_tuples = get_target_namespaced_resources(f)
 
     print(f'Retrieving live state from {args.k8s_apiserver_url}...')
