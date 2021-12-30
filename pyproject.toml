@@ -21,7 +21,7 @@ pylint = "~2.12"
 rope = "~0.22"
 types-PyYAML = "~6.0"
 types-requests = "~2.26"
-yapf = "~0.31"
+yapf = "~0.32"
 
 [tool.yapf]
 based_on_style = "pep8"
