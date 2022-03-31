@@ -21,6 +21,7 @@ pylint = "~2.12"
 rope = "~0.23"
 types-PyYAML = "~6.0"
 types-requests = "~2.27"
+toml = "~0.10"
 yapf = "~0.32"
 
 [tool.yapf]
