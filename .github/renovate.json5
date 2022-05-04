@@ -17,7 +17,7 @@
   packageRules: [
     // Commit message formats
     {
-      matchDatasources: ["github-actions"],
+      matchManagers: ["github-actions"],
       commitMessagePrefix: "ci: ",
     },
   ],
