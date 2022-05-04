@@ -60,6 +60,16 @@ jobs:
         sleep 1
         make e2e-with-kind
 
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check workflow files
+      run: |
+        echo "::add-matcher::.github/actionlint-matcher.json"
+        bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        ./actionlint
+
   codeql:
     runs-on: ubuntu-latest
     steps:
