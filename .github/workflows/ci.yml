@@ -32,11 +32,11 @@ jobs:
     strategy:
       matrix:
         k8s-version:
-        - v1.21.14
-        - v1.22.12
-        - v1.23.9
+        - v1.21.12
+        - v1.22.9
+        - v1.23.6
         - v1.24.3
-        - v1.25.0
+        - v1.25.0-beta.0
       fail-fast: false
     env:
       kind-version: v0.14.0
