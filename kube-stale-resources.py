@@ -50,25 +50,26 @@ def get_live_namespaced_resources(url: str) -> List[K8sResourceIdentifier]:
     # merges https://kubernetes.io/docs/reference/using-api/#api-groups
 
     # legacy API group
-    apiVersions = requests.get(url + '/api', headers=HEADERS).json()['versions']
+    apiVersions = requests.get(url + '/api', headers=HEADERS, timeout=10).json()['versions']
     for apiVersion in apiVersions:
-        apiResources = requests.get(url + '/api/' + apiVersion, headers=HEADERS).json()['resources']
+        apiResources = requests.get(url + '/api/' + apiVersion, headers=HEADERS, timeout=10).json()['resources']
         for apiResource in apiResources:
             if not ('list' in apiResource['verbs'] and apiResource['namespaced']):
                 continue
 
-            items = requests.get(url + '/api/' + apiVersion + '/' + apiResource['name'],
-                                 headers=HEADERS).json()['items']
+            items = requests.get(url + '/api/' + apiVersion + '/' + apiResource['name'], headers=HEADERS,
+                                 timeout=10).json()['items']
             for item in items:
                 result.append(
                     (item['metadata']['namespace'], apiVersion, apiResource['kind'], item['metadata']['name']))
 
     # named API groups
-    apiGroups = requests.get(url + '/apis', headers=HEADERS).json()['groups']
+    apiGroups = requests.get(url + '/apis', headers=HEADERS, timeout=10).json()['groups']
     for apiGroup in apiGroups:
 
         apiResources = requests.get(url + '/apis/' + apiGroup['preferredVersion']['groupVersion'],
-                                    headers=HEADERS).json()['resources']
+                                    headers=HEADERS,
+                                    timeout=10).json()['resources']
         for apiResource in apiResources:
             if not ('list' in apiResource['verbs'] and apiResource['namespaced']):
                 continue
@@ -80,7 +81,8 @@ def get_live_namespaced_resources(url: str) -> List[K8sResourceIdentifier]:
 
             items = requests.get(url + '/apis/' + apiGroup['preferredVersion']['groupVersion'] + '/' +
                                  apiResource['name'],
-                                 headers=HEADERS).json()['items']
+                                 headers=HEADERS,
+                                 timeout=10).json()['items']
             for item in items:
                 result.append((item['metadata']['namespace'], apiGroup['preferredVersion']['groupVersion'],
                                apiResource['kind'], item['metadata']['name']))
