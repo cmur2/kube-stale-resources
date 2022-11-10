@@ -10,13 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.11'
     - name: Install dependencies
       run: |
         pip install poetry
@@ -28,24 +28,23 @@ jobs:
   e2e-with-kind:
     name: e2e with kind
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         k8s-version:
-        - v1.21.12
-        - v1.22.9
-        - v1.23.6
-        - v1.24.3
-        - v1.25.0-beta.0
+        - v1.22.15
+        - v1.23.13
+        - v1.24.7
+        - v1.25.3
       fail-fast: false
     env:
-      kind-version: v0.14.0
+      kind-version: v0.17.0
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.11'
     - name: Install dependencies
       run: |
         pip install poetry
@@ -63,7 +62,7 @@ jobs:
         make e2e-with-kind
 
   actionlint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Check workflow files
@@ -73,7 +72,7 @@ jobs:
         ./actionlint
 
   codeql:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
       with:
