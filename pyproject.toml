@@ -16,7 +16,7 @@ pyyaml = "6.0.1"
 requests = "~2.29.0"
 
 [tool.poetry.dev-dependencies]
-mypy = "1.7.1"
+mypy = "1.8.0"
 pylint = "~3.0.0"
 rope = "~1.11.0"
 types-PyYAML = "~6.0"
