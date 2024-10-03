@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
@@ -28,7 +28,7 @@ jobs:
   e2e-with-kind:
     name: e2e with kind
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         k8s-version:
@@ -62,7 +62,7 @@ jobs:
         make e2e-with-kind
 
   actionlint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
     - name: Check workflow files
@@ -72,7 +72,7 @@ jobs:
         ./actionlint
 
   codeql:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
       with:
