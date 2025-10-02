@@ -12,7 +12,7 @@ homepage = "https://dev.mycrobase.de/gitea/cn/kube-stale-resources"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pyyaml = "6.0.2"
+pyyaml = "6.0.3"
 requests = "~2.32.0"
 
 [tool.poetry.dev-dependencies]
